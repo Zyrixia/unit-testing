@@ -58,6 +58,10 @@ public class IntQueueTest {
         assertEquals(1, mQueue.size());
     }
 
+    @Test
+    public void testEnqueueNull() {
+        assertThrows(NullPointerException.class, () -> mQueue.enqueue(null));
+    }
 
     @Test
     public void testPeekOnEmptyQueue() {
@@ -85,12 +89,13 @@ public class IntQueueTest {
     }
 
     @Test
-    public void testEnqueuePastCapacity() {
-        for (int i = 1; i <= 20; i++) {
+    public void testQueueingPastCapacity() {
+        for (int i = 1; i <= 15; i++) {
             mQueue.enqueue(i);
         }
-        assertEquals(20, mQueue.size());
+        assertEquals(15, mQueue.size());
     }
+
 
     @Test
     public void testClear() {
@@ -100,6 +105,12 @@ public class IntQueueTest {
 
         assertTrue(mQueue.isEmpty());
         assertNull(mQueue.peek());
+
+        mQueue.enqueue(30);
+        mQueue.enqueue(40);
+
+        assertEquals(30, (int)mQueue.dequeue());
+        assertEquals(40, (int)mQueue.peek());
     }
 
     @Test
@@ -113,6 +124,8 @@ public class IntQueueTest {
         for (int i = 10; i < 15; i++) {
             mQueue.enqueue(i);
         }
+
+        mQueue.enqueue(20);
         assertEquals(5, (int)mQueue.dequeue());
     }
 
